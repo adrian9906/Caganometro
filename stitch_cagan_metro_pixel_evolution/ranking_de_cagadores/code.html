@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Caganómetro - Ranking Mundial</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&amp;family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-dim": "#dcd9d9",
+                        "on-error-container": "#93000a",
+                        "error": "#ba1a1a",
+                        "tertiary-container": "#c9a900",
+                        "on-secondary-container": "#3a6d51",
+                        "on-secondary": "#ffffff",
+                        "tertiary": "#705d00",
+                        "inverse-on-surface": "#f3f0f0",
+                        "on-secondary-fixed": "#002111",
+                        "on-tertiary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "background": "#fbf9f8",
+                        "inverse-surface": "#303030",
+                        "on-surface": "#1b1c1c",
+                        "tertiary-fixed": "#ffe16d",
+                        "secondary-fixed": "#b8efcc",
+                        "surface-container-high": "#eae7e7",
+                        "on-secondary-fixed-variant": "#1c5036",
+                        "surface-bright": "#fbf9f8",
+                        "inverse-primary": "#ffb68c",
+                        "on-primary-fixed": "#321200",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary": "#36684d",
+                        "primary": "#6c2f00",
+                        "on-tertiary-fixed": "#221b00",
+                        "primary-fixed": "#ffdbc9",
+                        "surface-tint": "#934b19",
+                        "on-background": "#1b1c1c",
+                        "primary-fixed-dim": "#ffb68c",
+                        "surface-container-highest": "#e4e2e1",
+                        "surface-container": "#f0eded",
+                        "outline-variant": "#dac2b6",
+                        "error-container": "#ffdad6",
+                        "surface-variant": "#e4e2e1",
+                        "tertiary-fixed-dim": "#e9c400",
+                        "on-tertiary-fixed-variant": "#544600",
+                        "secondary-fixed-dim": "#9dd3b1",
+                        "on-primary": "#ffffff",
+                        "on-tertiary-container": "#4c3e00",
+                        "on-primary-fixed-variant": "#753401",
+                        "primary-container": "#8b4513",
+                        "secondary-container": "#b5ecc9",
+                        "on-primary-container": "#ffc29f",
+                        "on-surface-variant": "#54433a",
+                        "surface-container-low": "#f6f3f2",
+                        "outline": "#877369",
+                        "surface": "#fbf9f8"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-mobile": "24px",
+                        "margin-desktop": "48px",
+                        "pixel-unit": "4px",
+                        "container-max": "800px",
+                        "gutter": "16px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Space Mono"],
+                        "headline-md": ["Space Mono"],
+                        "headline-lg": ["Space Mono"],
+                        "body-sm": ["Courier Prime"],
+                        "label-caps": ["Space Mono"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "700" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-1px", "fontWeight": "700" }],
+                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "label-caps": ["12px", { "lineHeight": "16px", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: #b8efcc; /* secondary-fixed to give a retro mint vibe */
+            background-image: 
+                linear-gradient(rgba(47, 47, 47, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(47, 47, 47, 0.1) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+
+        .pixel-border {
+            border: 4px solid #1b1c1c;
+        }
+
+        .pixel-shadow {
+            box-shadow: 8px 8px 0px 0px #1b1c1c;
+        }
+
+        .btn-retro {
+            border: 4px solid #1b1c1c;
+            box-shadow: 0px 4px 0px 0px #1b1c1c;
+            transition: all 0.1s ease;
+        }
+        
+        .btn-retro:hover {
+            box-shadow: 0px 6px 0px 0px #1b1c1c;
+            transform: translateY(-2px);
+        }
+
+        .btn-retro:active {
+            box-shadow: 0px 0px 0px 0px #1b1c1c;
+            transform: translateY(4px);
+        }
+
+        .medal-icon {
+            font-variation-settings: 'FILL' 1;
+        }
+        
+        .gold { color: #c9a900; }
+        .silver { color: #dcd9d9; }
+        .bronze { color: #8b4513; }
+        
+        .leaderboard-row:nth-child(even) {
+            background-color: rgba(255, 255, 255, 0.5);
+        }
+    </style>
+</head>
+<body class="text-on-background font-body-lg min-h-screen pb-32 md:pb-0 pt-20">
+<!-- TopAppBar (Web) -->
+<header class="hidden md:flex justify-between items-center w-full px-margin-desktop h-20 z-50 fixed top-0 bg-surface dark:bg-surface-container-highest border-b-4 border-on-surface shadow-[0_4px_0_0_#1b1c1c]">
+<div class="font-headline-lg text-headline-lg text-primary uppercase tracking-tighter">CAGANÓMETRO</div>
+<nav class="flex gap-8">
+<a class="text-on-surface-variant hover:bg-surface-container-high transition-all px-4 py-2 pixel-border" href="#">Jugar</a>
+<a class="text-primary font-bold bg-primary-container text-on-primary-container hover:bg-surface-container-high transition-all px-4 py-2 pixel-border shadow-[4px_4px_0_0_rgba(27,28,28,1)]" href="#">Ranking</a>
+<a class="text-on-surface-variant hover:bg-surface-container-high transition-all px-4 py-2 pixel-border" href="#">Perfil</a>
+</nav>
+<div class="flex gap-4">
+<span class="material-symbols-outlined cursor-pointer hover:bg-surface-container-high p-2 pixel-border" data-icon="leaderboard">leaderboard</span>
+<span class="material-symbols-outlined cursor-pointer hover:bg-surface-container-high p-2 pixel-border" data-icon="person">person</span>
+<span class="material-symbols-outlined cursor-pointer hover:bg-surface-container-high p-2 pixel-border" data-icon="settings">settings</span>
+</div>
+</header>
+<!-- TopAppBar (Mobile) -->
+<header class="flex md:hidden justify-between items-center w-full px-margin-mobile h-20 z-50 fixed top-0 bg-surface dark:bg-surface-container-highest border-b-4 border-on-surface shadow-[0_4px_0_0_#1b1c1c]">
+<div class="font-headline-lg text-headline-lg text-primary uppercase tracking-tighter">CAGANÓMETRO</div>
+<div class="flex gap-2">
+<span class="material-symbols-outlined cursor-pointer p-2" data-icon="settings">settings</span>
+</div>
+</header>
+<main class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop pt-8 pb-12 flex flex-col gap-8">
+<!-- Header Section -->
+<div class="text-center bg-surface p-6 pixel-border pixel-shadow relative overflow-hidden group">
+<h1 class="font-headline-lg text-headline-lg text-primary mb-2 uppercase">RANKING MUNDIAL DE CACAS</h1>
+<p class="font-body-lg text-on-surface-variant">Top players around the globe</p>
+</div>
+<!-- Leaderboard Panel -->
+<div class="bg-surface pixel-border pixel-shadow p-4 md:p-8">
+<div class="flex justify-between items-center border-b-4 border-on-surface pb-4 mb-4 font-label-caps text-label-caps text-on-surface-variant">
+<div class="w-16 text-center">RANK</div>
+<div class="flex-1 px-4">PLAYER</div>
+<div class="w-24 text-right">CACAS</div>
+<div class="hidden sm:block w-32 text-center">STRENGTH</div>
+</div>
+<div class="flex flex-col gap-2">
+<!-- 1st Place -->
+<div class="leaderboard-row flex justify-between items-center py-3 px-2 border-2 border-transparent hover:border-on-surface transition-colors cursor-pointer bg-tertiary-fixed">
+<div class="w-16 flex justify-center">
+<span class="material-symbols-outlined medal-icon gold text-3xl" data-icon="military_tech">military_tech</span>
+</div>
+<div class="flex-1 px-4 font-headline-md text-headline-md text-on-surface">PooMaster99</div>
+<div class="w-24 text-right font-headline-md text-headline-md text-primary">9,999</div>
+<div class="hidden sm:flex w-32 justify-center gap-1">
+<div class="w-3 h-6 bg-primary pixel-border"></div>
+<div class="w-3 h-6 bg-primary pixel-border"></div>
+<div class="w-3 h-6 bg-primary pixel-border"></div>
+<div class="w-3 h-6 bg-primary pixel-border"></div>
+<div class="w-3 h-6 bg-primary pixel-border"></div>
+</div>
+</div>
+<!-- 2nd Place -->
+<div class="leaderboard-row flex justify-between items-center py-3 px-2 border-2 border-transparent hover:border-on-surface transition-colors cursor-pointer">
+<div class="w-16 flex justify-center">
+<span class="material-symbols-outlined medal-icon silver text-3xl" data-icon="military_tech">military_tech</span>
+</div>
+<div class="flex-1 px-4 font-body-lg text-on-surface font-bold">TurdBoy</div>
+<div class="w-24 text-right font-body-lg text-primary font-bold">8,542</div>
+<div class="hidden sm:flex w-32 justify-center gap-1">
+<div class="w-3 h-6 bg-primary pixel-border"></div>
+<div class="w-3 h-6 bg-primary pixel-border"></div>
+<div class="w-3 h-6 bg-primary pixel-border"></div>
+<div class="w-3 h-6 bg-primary pixel-border"></div>
+<div class="w-3 h-6 bg-surface-dim pixel-border"></div>
+</div>
+</div>
+<!-- 3rd Place -->
+<div class="leaderboard-row flex justify-between items-center py-3 px-2 border-2 border-transparent hover:border-on-surface transition-colors cursor-pointer">
+<div class="w-16 flex justify-center">
+<span class="material-symbols-outlined medal-icon bronze text-3xl" data-icon="military_tech">military_tech</span>
+</div>
+<div class="flex-1 px-4 font-body-lg text-on-surface font-bold">LogLady</div>
+<div class="w-24 text-right font-body-lg text-primary font-bold">7,100</div>
+<div class="hidden sm:flex w-32 justify-center gap-1">
+<div class="w-3 h-6 bg-primary pixel-border"></div>
+<div class="w-3 h-6 bg-primary pixel-border"></div>
+<div class="w-3 h-6 bg-primary pixel-border"></div>
+<div class="w-3 h-6 bg-surface-dim pixel-border"></div>
+<div class="w-3 h-6 bg-surface-dim pixel-border"></div>
+</div>
+</div>
+<!-- 4th Place -->
+<div class="leaderboard-row flex justify-between items-center py-3 px-2 border-2 border-transparent hover:border-on-surface transition-colors cursor-pointer">
+<div class="w-16 text-center font-headline-md text-on-surface-variant">4</div>
+<div class="flex-1 px-4 font-body-lg text-on-surface">CrapShooter</div>
+<div class="w-24 text-right font-body-lg text-primary">6,800</div>
+<div class="hidden sm:flex w-32 justify-center gap-1">
+<div class="w-3 h-6 bg-primary pixel-border"></div>
+<div class="w-3 h-6 bg-primary pixel-border"></div>
+<div class="w-3 h-6 bg-surface-dim pixel-border"></div>
+<div class="w-3 h-6 bg-surface-dim pixel-border"></div>
+<div class="w-3 h-6 bg-surface-dim pixel-border"></div>
+</div>
+</div>
+<!-- 5th Place -->
+<div class="leaderboard-row flex justify-between items-center py-3 px-2 border-2 border-transparent hover:border-on-surface transition-colors cursor-pointer">
+<div class="w-16 text-center font-headline-md text-on-surface-variant">5</div>
+<div class="flex-1 px-4 font-body-lg text-on-surface">DukeOfDook</div>
+<div class="w-24 text-right font-body-lg text-primary">5,430</div>
+<div class="hidden sm:flex w-32 justify-center gap-1">
+<div class="w-3 h-6 bg-primary pixel-border"></div>
+<div class="w-3 h-6 bg-primary pixel-border"></div>
+<div class="w-3 h-6 bg-surface-dim pixel-border"></div>
+<div class="w-3 h-6 bg-surface-dim pixel-border"></div>
+<div class="w-3 h-6 bg-surface-dim pixel-border"></div>
+</div>
+</div>
+</div>
+<div class="mt-8 flex justify-center">
+<button class="bg-primary text-on-primary font-headline-md text-headline-md px-8 py-4 btn-retro uppercase">
+                    VOLVER AL JUEGO
+                </button>
+</div>
+</div>
+</main>
+<!-- BottomNavBar (Mobile) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-4 h-24 bg-surface dark:bg-surface-container-highest border-t-4 border-on-surface shadow-[0_-4px_0_0_#1b1c1c]">
+<div class="flex flex-col items-center justify-center text-on-surface-variant opacity-70 w-1/3">
+<span class="material-symbols-outlined mb-1" data-icon="videogame_asset">videogame_asset</span>
+<span class="font-label-caps text-label-caps">Jugar</span>
+</div>
+<div class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container border-2 border-on-surface shadow-[4px_4px_0_0_rgba(27,28,28,1)] px-4 py-1 w-1/3 active:scale-95 transition-transform">
+<span class="material-symbols-outlined mb-1" data-icon="military_tech">military_tech</span>
+<span class="font-label-caps text-label-caps font-bold">Ranking</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant opacity-70 w-1/3">
+<span class="material-symbols-outlined mb-1" data-icon="account_circle">account_circle</span>
+<span class="font-label-caps text-label-caps">Perfil</span>
+</div>
+</nav>
+</body></html>

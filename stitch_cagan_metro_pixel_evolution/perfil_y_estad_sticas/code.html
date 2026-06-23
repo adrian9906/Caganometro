@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Caganómetro - Tu Historial</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&amp;family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-dim": "#dcd9d9",
+                        "on-error-container": "#93000a",
+                        "error": "#ba1a1a",
+                        "tertiary-container": "#c9a900",
+                        "on-secondary-container": "#3a6d51",
+                        "on-secondary": "#ffffff",
+                        "tertiary": "#705d00",
+                        "inverse-on-surface": "#f3f0f0",
+                        "on-secondary-fixed": "#002111",
+                        "on-tertiary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "background": "#fbf9f8",
+                        "inverse-surface": "#303030",
+                        "on-surface": "#1b1c1c",
+                        "tertiary-fixed": "#ffe16d",
+                        "secondary-fixed": "#b8efcc",
+                        "surface-container-high": "#eae7e7",
+                        "on-secondary-fixed-variant": "#1c5036",
+                        "surface-bright": "#fbf9f8",
+                        "inverse-primary": "#ffb68c",
+                        "on-primary-fixed": "#321200",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary": "#36684d",
+                        "primary": "#6c2f00",
+                        "on-tertiary-fixed": "#221b00",
+                        "primary-fixed": "#ffdbc9",
+                        "surface-tint": "#934b19",
+                        "on-background": "#1b1c1c",
+                        "primary-fixed-dim": "#ffb68c",
+                        "surface-container-highest": "#e4e2e1",
+                        "surface-container": "#f0eded",
+                        "outline-variant": "#dac2b6",
+                        "error-container": "#ffdad6",
+                        "surface-variant": "#e4e2e1",
+                        "tertiary-fixed-dim": "#e9c400",
+                        "on-tertiary-fixed-variant": "#544600",
+                        "secondary-fixed-dim": "#9dd3b1",
+                        "on-primary": "#ffffff",
+                        "on-tertiary-container": "#4c3e00",
+                        "on-primary-fixed-variant": "#753401",
+                        "primary-container": "#8b4513",
+                        "secondary-container": "#b5ecc9",
+                        "on-primary-container": "#ffc29f",
+                        "on-surface-variant": "#54433a",
+                        "surface-container-low": "#f6f3f2",
+                        "outline": "#877369",
+                        "surface": "#fbf9f8"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-mobile": "24px",
+                        "margin-desktop": "48px",
+                        "pixel-unit": "4px",
+                        "container-max": "800px",
+                        "gutter": "16px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Space Mono"],
+                        "headline-md": ["Space Mono"],
+                        "headline-lg": ["Space Mono"],
+                        "body-sm": ["Courier Prime"],
+                        "label-caps": ["Space Mono"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "700" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-1px", "fontWeight": "700" }],
+                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "label-caps": ["12px", { "lineHeight": "16px", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .blueprint-pattern {
+            background-image: 
+                linear-gradient(to right, rgba(139, 69, 19, 0.05) 2px, transparent 2px),
+                linear-gradient(to bottom, rgba(139, 69, 19, 0.05) 2px, transparent 2px);
+            background-size: 16px 16px;
+        }
+        .pixelated {
+            image-rendering: pixelated;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-lg min-h-screen relative blueprint-pattern selection:bg-primary selection:text-on-primary">
+<nav class="flex justify-between items-center w-full px-margin-mobile h-20 z-50 bg-surface dark:bg-surface-container-highest docked full-width top-0 border-b-4 border-on-surface dark:border-on-background shadow-[0_4px_0_0_#1b1c1c] fixed">
+<div class="font-headline-lg text-headline-lg text-primary dark:text-primary-fixed uppercase tracking-tighter">
+            CAGANÓMETRO
+        </div>
+<div class="flex items-center gap-4">
+<button class="text-on-surface-variant hover:bg-surface-container-high transition-all active:translate-y-1 active:shadow-none p-2 border-2 border-transparent">
+<span class="material-symbols-outlined">leaderboard</span>
+</button>
+<button class="text-primary font-bold hover:bg-surface-container-high transition-all active:translate-y-1 active:shadow-none p-2 border-2 border-transparent">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">person</span>
+</button>
+<button class="text-on-surface-variant hover:bg-surface-container-high transition-all active:translate-y-1 active:shadow-none p-2 border-2 border-transparent">
+<span class="material-symbols-outlined">settings</span>
+</button>
+</div>
+</nav>
+<main class="pt-28 pb-32 px-4 md:px-margin-desktop max-w-container-max mx-auto space-y-8">
+<header class="inline-block border-4 border-on-surface bg-surface-container-high px-6 py-3 shadow-[8px_8px_0_0_#1b1c1c] -rotate-1 relative">
+<div class="absolute -top-2 -right-2 w-4 h-4 bg-primary border-2 border-on-surface"></div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface uppercase tracking-tight">TU HISTORIAL</h1>
+</header>
+<section class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<div class="border-4 border-on-surface bg-secondary-container shadow-[8px_8px_0_0_#1b1c1c] p-4 relative flex flex-col items-center justify-center aspect-square blueprint-pattern group">
+<div class="absolute top-0 left-0 bg-on-surface text-on-primary font-label-caps text-label-caps px-3 py-1 border-b-4 border-r-4 border-on-surface">AVATAR ACTUAL</div>
+<div class="w-3/4 h-3/4 border-4 border-on-surface bg-surface flex items-center justify-center relative shadow-[inset_4px_4px_0_0_rgba(27,28,28,0.1)] group-hover:bg-surface-container transition-colors">
+<img class="w-full h-full object-contain p-6 pixelated transition-transform group-hover:scale-105" data-alt="A highly detailed 8-bit style pixel art character in a brutalist, flat color palette. The character is a chunky, muscular anthropomorphic figure in brown and tan tones, representing a 'buffed' high-level state. Solid thick black outlines, no anti-aliasing, retro video game aesthetic, set against a stark solid background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCOCJfhAVJCLl5Mjrzz1092NAGBtHNwRysKkDLMnZ9wFh7dLNWRu2f-vN0sT8x4Kdw4EO_uOGMSF0zgnVaTCswPq8o-e7jn0AFslGve3oHJAhyZ46A3go_PyOZTkzDEjHQ1z9M4RnKHMuykYrRQiPbQtPCqZ35dsMKFL24w0pMrLCKMGJdrdc4TiM2_UiYYnUHfKrdu3LBdtFyhRGes-mZ3hTKNG7nqmkC0ZeHA0wkt-iL5IXO0SLhUHC6Ao5hBT56v4ZVX0QhHofJm"/>
+</div>
+</div>
+<div class="flex flex-col gap-6 h-full">
+<div class="border-4 border-on-surface bg-surface shadow-[8px_8px_0_0_#1b1c1c] p-6 flex-1">
+<h2 class="font-headline-md text-headline-md text-on-surface border-b-4 border-on-surface pb-2 mb-6">EVOLUCIÓN</h2>
+<div class="flex justify-between items-center border-4 border-on-surface p-4 bg-surface-container-low shadow-[4px_4px_0_0_#1b1c1c] mb-6">
+<div class="flex flex-col items-center gap-2">
+<span class="font-label-caps text-label-caps text-on-surface-variant">INICIO</span>
+<div class="w-12 h-12 border-4 border-on-surface bg-[#d2b48c] shadow-[inset_-4px_-4px_0_0_rgba(0,0,0,0.2)]"></div>
+</div>
+<span class="material-symbols-outlined text-4xl text-primary animate-pulse">keyboard_double_arrow_right</span>
+<div class="flex flex-col items-center gap-2">
+<span class="font-label-caps text-label-caps text-on-surface-variant">ACTUAL</span>
+<div class="w-12 h-12 border-4 border-on-surface bg-primary shadow-[inset_-4px_-4px_0_0_rgba(0,0,0,0.4)]"></div>
+</div>
+</div>
+<div class="border-4 border-on-surface p-6 bg-primary-container text-on-primary-container shadow-[4px_4px_0_0_#1b1c1c] text-center relative overflow-hidden">
+<div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4IiBoZWlnaHQ9IjgiPgo8cmVjdCB3aWR0aD0iOCIgaGVpZ2h0PSI4IiBmaWxsPSIjZmZmIiBmaWxsLW9wYWNpdHk9IjAuMSI+PC9yZWN0Pgo8L3N2Zz4=')] opacity-20"></div>
+<span class="font-label-caps text-label-caps block mb-2 relative z-10">CRECIMIENTO TOTAL</span>
+<span class="font-headline-lg text-headline-lg text-4xl block relative z-10">+420%</span>
+</div>
+</div>
+</div>
+</section>
+<section class="border-4 border-on-surface bg-surface shadow-[8px_8px_0_0_#1b1c1c] p-6 relative">
+<div class="absolute -top-4 -right-4 w-8 h-8 bg-secondary border-4 border-on-surface"></div>
+<h2 class="font-headline-md text-headline-md text-on-surface border-b-4 border-on-surface pb-2 mb-6">LÍNEA DE TIEMPO</h2>
+<div class="flex flex-col gap-4 font-body-sm text-body-sm">
+<div class="flex justify-between items-center border-b-4 border-surface-container-high pb-4">
+<span class="text-on-surface font-bold">Hoy, 08:30</span>
+<div class="flex items-center gap-4">
+<span class="font-bold text-primary bg-primary-fixed px-2 py-1 border-2 border-on-surface">+15 EXP</span>
+<div class="w-8 h-8 border-2 border-on-surface bg-primary"></div>
+</div>
+</div>
+<div class="flex justify-between items-center border-b-4 border-surface-container-high pb-4">
+<span class="text-on-surface font-bold">Ayer, 19:45</span>
+<div class="flex items-center gap-4">
+<span class="font-bold text-primary bg-primary-fixed px-2 py-1 border-2 border-on-surface">+10 EXP</span>
+<div class="w-8 h-8 border-2 border-on-surface bg-[#a0522d]"></div>
+</div>
+</div>
+<div class="flex justify-between items-center border-b-4 border-surface-container-high pb-4">
+<span class="text-on-surface font-bold">Lun, 09:15</span>
+<div class="flex items-center gap-4">
+<span class="font-bold text-primary bg-primary-fixed px-2 py-1 border-2 border-on-surface">+20 EXP</span>
+<div class="w-8 h-8 border-2 border-on-surface bg-primary"></div>
+</div>
+</div>
+<div class="mt-4 text-center">
+<button class="px-8 py-3 bg-surface border-4 border-on-surface shadow-[4px_4px_0_0_#1b1c1c] hover:bg-surface-container-high active:translate-y-1 active:shadow-none transition-all font-label-caps text-label-caps uppercase text-on-surface">
+                        CARGAR MÁS REGISTROS
+                    </button>
+</div>
+</div>
+</section>
+</main>
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-4 h-24 bg-surface dark:bg-surface-container-highest border-t-4 border-on-surface dark:border-on-background shadow-[0_-4px_0_0_#1b1c1c] md:hidden">
+<button class="flex flex-col items-center justify-center text-on-surface-variant opacity-70 hover:bg-surface-container-low active:scale-95 transition-transform w-20 h-full">
+<span class="material-symbols-outlined">videogame_asset</span>
+<span class="font-label-caps text-label-caps mt-1">Jugar</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant opacity-70 hover:bg-surface-container-low active:scale-95 transition-transform w-20 h-full">
+<span class="material-symbols-outlined">military_tech</span>
+<span class="font-label-caps text-label-caps mt-1">Ranking</span>
+</button>
+<button class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container border-2 border-on-surface shadow-[4px_4px_0_0_rgba(27,28,28,1)] px-4 py-1 hover:bg-surface-container-low active:scale-95 transition-transform w-20 h-full">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">account_circle</span>
+<span class="font-label-caps text-label-caps mt-1">Perfil</span>
+</button>
+</nav>
+</body></html>
