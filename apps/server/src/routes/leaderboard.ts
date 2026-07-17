@@ -12,6 +12,8 @@ leaderboardRouter.get("/", async (_req, res) => {
     jugadores: personajes.map((personaje, index) => ({
       id: personaje.id,
       nombre: personaje.nombre,
+      nickname: personaje.nickname,
+      colorPelo: personaje.colorPelo,
       totalCacas: personaje.totalCacas,
       fuerza: personaje.fuerza,
       tamano: personaje.tamano,

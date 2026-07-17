@@ -37,6 +37,12 @@ export function evolveSkinColor(currentColor: string) {
   return rgbToHex(r - DARKEN_STEP, g - DARKEN_STEP, b - DARKEN_STEP);
 }
 
+export function skinColorAtPoopCount(baseColor: string, totalPoops: number) {
+  let color = baseColor;
+  for (let index = 0; index < totalPoops; index += 1) color = evolveSkinColor(color);
+  return color;
+}
+
 export function assertPoopCooldown(usuario: { ultimaCaca: string | Date | null }) {
   if (!usuario.ultimaCaca) {
     return;

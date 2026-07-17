@@ -44,6 +44,8 @@ export type CharacterPayload = {
 export type LeaderboardEntry = {
   id: number;
   nombre: string;
+  nickname: string;
+  colorPelo: string;
   totalCacas: number;
   fuerza: number;
   tamano: number;
@@ -105,6 +107,14 @@ export async function createCharacter(token: string, payload: CharacterPayload) 
   });
 }
 
+export async function editCharacter(token: string, characterId: number, payload: CharacterPayload) {
+  return request<{ personaje: Character; personajes: Character[] }>(`/api/game/characters/${characterId}`, {
+    method: "PATCH",
+    headers: authHeaders(token),
+    body: JSON.stringify(payload)
+  });
+}
+
 export async function selectCharacter(token: string, characterId: number) {
   return request<{ personajeActivo: Character; personajes: Character[] }>("/api/game/characters/select", {
     method: "POST",
@@ -130,4 +140,3 @@ export async function resetCounter(token: string) {
 export async function fetchLeaderboard() {
   return request<{ jugadores: LeaderboardEntry[] }>("/api/leaderboard");
 }
-

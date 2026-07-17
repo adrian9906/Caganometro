@@ -3,7 +3,7 @@ import type { Request } from "express";
 import { Router } from "express";
 import jwt from "jsonwebtoken";
 import { z } from "zod";
-import { assertPoopCooldown, computeEvolution, medalForPosition } from "../lib/game.js";
+import { assertPoopCooldown, computeEvolution, medalForPosition, skinColorAtPoopCount } from "../lib/game.js";
 import {
   addHistorial,
   createCharacter,
@@ -36,6 +36,8 @@ const createCharacterSchema = z.object({
 const selectCharacterSchema = z.object({
   characterId: z.number().int().positive()
 });
+
+const characterIdSchema = z.coerce.number().int().positive();
 
 function getAccountIdFromRequest(req: Request) {
   const authHeader = req.header("authorization");
@@ -104,6 +106,34 @@ gameRouter.post("/characters", async (req, res) => {
     personaje,
     personajes
   });
+});
+
+gameRouter.patch("/characters/:characterId", async (req, res) => {
+  const accountId = getAccountIdFromRequest(req);
+  const characterId = characterIdSchema.parse(req.params.characterId);
+  const payload = createCharacterSchema.parse(req.body);
+  const existing = await findCharacterById(characterId);
+
+  if (!existing || existing.accountId !== accountId) {
+    return res.status(404).json({ error: "Personaje no encontrado." });
+  }
+
+  const personaje = await updateCharacter(characterId, {
+    nombre: payload.nombre,
+    nickname: payload.nickname,
+    descripcion: payload.descripcion,
+    habilidades: payload.habilidades,
+    fortalezas: payload.fortalezas,
+    debilidades: payload.debilidades,
+    edad: payload.edad,
+    estatura: payload.estatura,
+    colorPelo: payload.colorPelo,
+    colorPiel: payload.colorPiel,
+    colorActual: skinColorAtPoopCount(payload.colorPiel, existing.totalCacas)
+  });
+  const personajes = await getCharactersByAccountId(accountId);
+
+  return res.json({ personaje, personajes });
 });
 
 gameRouter.post("/characters/select", async (req, res) => {
@@ -177,4 +207,3 @@ gameRouter.post("/reset", async (req, res) => {
     medalla: posicion > 0 ? medalForPosition(posicion) : null
   });
 });
-

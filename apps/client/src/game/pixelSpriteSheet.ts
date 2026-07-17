@@ -1,162 +1,197 @@
-// @ts-nocheck
 import Phaser from "phaser";
 
-type SpriteOptions = {
+export type CharacterAppearance = {
   hairHex: string;
   skinHex: string;
+  height?: number;
+  shirtHex?: string;
+  pantsHex?: string;
 };
 
-const FRAME_WIDTH = 24;
-const FRAME_HEIGHT = 28;
-const FRAME_COUNT = 8;
+export const CHARACTER_FRAME_WIDTH = 32;
+export const CHARACTER_FRAME_HEIGHT = 32;
+export const CHARACTER_FRAME_COUNT = 12;
 
-function fill(ctx: CanvasRenderingContext2D, x: number, y: number, w: number, h: number, color: string) {
+const OUTLINE = "#1b1c1c";
+const SHOE = "#4b2d20";
+
+function fill(ctx: CanvasRenderingContext2D, x: number, y: number, width: number, height: number, color: string) {
   ctx.fillStyle = color;
-  ctx.fillRect(x, y, w, h);
+  ctx.fillRect(x, y, width, height);
 }
 
-function outline(ctx: CanvasRenderingContext2D, x: number, y: number, w: number, h: number, color: string) {
-  ctx.fillStyle = color;
-  ctx.fillRect(x, y, w, 1);
-  ctx.fillRect(x, y + h - 1, w, 1);
-  ctx.fillRect(x, y, 1, h);
-  ctx.fillRect(x + w - 1, y, 1, h);
-}
-
-function drawHumanFrame(ctx: CanvasRenderingContext2D, frame: number, options: SpriteOptions) {
-  const ox = frame * FRAME_WIDTH;
-  const outlineColor = "#2f2f2f";
-  const shirt = "#8b4513";
-  const pants = "#355f48";
-  const shoe = "#5e2a0a";
-
-  const walkFrames = [
-    { legL: -2, legR: 2, armL: 2, armR: -2, bodyBob: 0, lean: 0 },
-    { legL: -1, legR: 1, armL: 1, armR: -1, bodyBob: -1, lean: 0 },
-    { legL: 2, legR: -2, armL: -2, armR: 2, bodyBob: 0, lean: 0 },
-    { legL: 1, legR: -1, armL: -1, armR: 1, bodyBob: -1, lean: 0 }
-  ];
-
-  const sitFrames = [
-    { bodyBob: 2, seat: true, headDrop: 1, legL: 0, legR: 0, armL: 0, armR: 0 },
-    { bodyBob: 3, seat: true, headDrop: 2, legL: 1, legR: -1, armL: 0, armR: 0 }
-  ];
-
-  const baseY = 25;
-  const idleBob = frame === 1 ? -1 : 0;
-  const data =
-    frame >= 6
-      ? sitFrames[frame - 6]
-      : frame >= 2
-        ? walkFrames[frame - 2]
-        : { legL: 0, legR: 0, armL: 0, armR: 0, bodyBob: idleBob, lean: 0 };
-
-  const headTop = 3 + (data.headDrop ?? 0) + data.bodyBob;
-  const torsoTop = 11 + data.bodyBob;
-  const hipsY = 18 + data.bodyBob;
-  const shoeY = baseY;
-
-  fill(ctx, ox + 7, headTop, 10, 8, options.skinHex);
-  outline(ctx, ox + 7, headTop, 10, 8, outlineColor);
-  fill(ctx, ox + 7, headTop, 10, 3, options.hairHex);
-  fill(ctx, ox + 7, headTop + 2, 2, 3, options.hairHex);
-
-  fill(ctx, ox + 10, headTop + 3, 1, 1, outlineColor);
-  fill(ctx, ox + 13, headTop + 3, 1, 1, outlineColor);
-  fill(ctx, ox + 11, headTop + 5, 2, 1, outlineColor);
-
-  fill(ctx, ox + 8, torsoTop, 8, 8, shirt);
-  outline(ctx, ox + 8, torsoTop, 8, 8, outlineColor);
-
-  fill(ctx, ox + 6 + data.armL, torsoTop + 1, 2, 7, options.skinHex);
-  outline(ctx, ox + 6 + data.armL, torsoTop + 1, 2, 7, outlineColor);
-  fill(ctx, ox + 16 + data.armR, torsoTop + 1, 2, 7, options.skinHex);
-  outline(ctx, ox + 16 + data.armR, torsoTop + 1, 2, 7, outlineColor);
-
-  if (data.seat) {
-    fill(ctx, ox + 8, hipsY, 4, 3, pants);
-    outline(ctx, ox + 8, hipsY, 4, 3, outlineColor);
-    fill(ctx, ox + 12, hipsY, 4, 3, pants);
-    outline(ctx, ox + 12, hipsY, 4, 3, outlineColor);
-
-    fill(ctx, ox + 10, hipsY + 3, 6, 3, pants);
-    outline(ctx, ox + 10, hipsY + 3, 6, 3, outlineColor);
-    fill(ctx, ox + 10, hipsY + 6, 6, 2, shoe);
-    outline(ctx, ox + 10, hipsY + 6, 6, 2, outlineColor);
-  } else {
-    fill(ctx, ox + 8 + data.legL, hipsY, 3, 7, pants);
-    outline(ctx, ox + 8 + data.legL, hipsY, 3, 7, outlineColor);
-    fill(ctx, ox + 13 + data.legR, hipsY, 3, 7, pants);
-    outline(ctx, ox + 13 + data.legR, hipsY, 3, 7, outlineColor);
-
-    fill(ctx, ox + 7 + data.legL, shoeY, 4, 2, shoe);
-    outline(ctx, ox + 7 + data.legL, shoeY, 4, 2, outlineColor);
-    fill(ctx, ox + 12 + data.legR, shoeY, 4, 2, shoe);
-    outline(ctx, ox + 12 + data.legR, shoeY, 4, 2, outlineColor);
+function outlinedRect(ctx: CanvasRenderingContext2D, x: number, y: number, width: number, height: number, color: string) {
+  fill(ctx, x, y, width, height, OUTLINE);
+  if (width > 2 && height > 2) {
+    fill(ctx, x + 1, y + 1, width - 2, height - 2, color);
   }
 }
 
-export function ensureCharacterSpriteSheet(scene: Phaser.Scene, key: string, options: SpriteOptions) {
+type FramePose = {
+  bob: number;
+  leftLeg: number;
+  rightLeg: number;
+  leftArm: number;
+  rightArm: number;
+  seated: boolean;
+  eyes: "open" | "blink" | "strain" | "wide";
+};
+
+const FRAME_POSES: readonly FramePose[] = [
+  { bob: 0, leftLeg: 0, rightLeg: 0, leftArm: 0, rightArm: 0, seated: false, eyes: "open" },
+  { bob: -1, leftLeg: 0, rightLeg: 0, leftArm: 0, rightArm: 0, seated: false, eyes: "open" },
+  { bob: 0, leftLeg: 0, rightLeg: 0, leftArm: 0, rightArm: 0, seated: false, eyes: "blink" },
+  { bob: -1, leftLeg: 0, rightLeg: 0, leftArm: 0, rightArm: 0, seated: false, eyes: "open" },
+  { bob: 0, leftLeg: -2, rightLeg: 2, leftArm: 2, rightArm: -2, seated: false, eyes: "open" },
+  { bob: -1, leftLeg: -1, rightLeg: 1, leftArm: 1, rightArm: -1, seated: false, eyes: "open" },
+  { bob: 0, leftLeg: 2, rightLeg: -2, leftArm: -2, rightArm: 2, seated: false, eyes: "open" },
+  { bob: -1, leftLeg: 1, rightLeg: -1, leftArm: -1, rightArm: 1, seated: false, eyes: "open" },
+  { bob: 2, leftLeg: 0, rightLeg: 0, leftArm: 0, rightArm: 0, seated: true, eyes: "open" },
+  { bob: 1, leftLeg: 1, rightLeg: -1, leftArm: -1, rightArm: 1, seated: true, eyes: "blink" },
+  { bob: 3, leftLeg: 0, rightLeg: 0, leftArm: 1, rightArm: -1, seated: true, eyes: "strain" },
+  { bob: -2, leftLeg: -1, rightLeg: 1, leftArm: -2, rightArm: 2, seated: false, eyes: "wide" }
+] as const;
+
+export function drawCharacterFrame(
+  ctx: CanvasRenderingContext2D,
+  frame: number,
+  appearance: CharacterAppearance,
+  originX = 0,
+  originY = 0
+) {
+  const pose = FRAME_POSES[frame] ?? FRAME_POSES[0];
+  const shirt = appearance.shirtHex ?? "#8b4513";
+  const pants = appearance.pantsHex ?? "#355f48";
+  const heightOffset = (appearance.height ?? 1.7) > 1.9 ? -1 : (appearance.height ?? 1.7) < 1.5 ? 1 : 0;
+  const headY = originY + 3 + pose.bob + heightOffset;
+  const torsoY = originY + 12 + pose.bob;
+  const hipY = originY + 21 + pose.bob;
+
+  if (pose.seated) {
+    // Perfil derecho para los frames de trabajo y baño. Phaser refleja el
+    // sprite cuando el puesto mira a la izquierda.
+    outlinedRect(ctx, originX + 11, headY, 10, 9, appearance.skinHex);
+    fill(ctx, originX + 11, headY, 10, 3, appearance.hairHex);
+    fill(ctx, originX + 11, headY + 2, 2, 5, appearance.hairHex);
+    fill(ctx, originX + 20, headY + 5, 2, 2, appearance.skinHex);
+    fill(ctx, originX + 18, headY + 4, 1, pose.eyes === "wide" ? 2 : 1, OUTLINE);
+    fill(ctx, originX + 19, headY + 7, 2, 1, OUTLINE);
+
+    outlinedRect(ctx, originX + 12, torsoY, 8, 10, shirt);
+    outlinedRect(ctx, originX + 18, torsoY + 2, 3, 7, appearance.skinHex);
+    outlinedRect(ctx, originX + 20 + pose.rightArm, torsoY + 7, 6, 3, appearance.skinHex);
+    outlinedRect(ctx, originX + 11, hipY, 8, 5, pants);
+    outlinedRect(ctx, originX + 16 + pose.leftLeg, hipY + 3, 8, 3, pants);
+    outlinedRect(ctx, originX + 19, hipY + 6, 7, 2, SHOE);
+    return;
+  }
+
+  outlinedRect(ctx, originX + 10, headY, 12, 9, appearance.skinHex);
+  fill(ctx, originX + 10, headY, 12, 3, appearance.hairHex);
+  fill(ctx, originX + 10, headY + 2, 2, 4, appearance.hairHex);
+  fill(ctx, originX + 20, headY + 2, 2, 2, appearance.hairHex);
+
+  if (pose.eyes === "blink" || pose.eyes === "strain") {
+    fill(ctx, originX + 13, headY + 4, 2, 1, OUTLINE);
+    fill(ctx, originX + 18, headY + 4, 2, 1, OUTLINE);
+  } else {
+    const eyeHeight = pose.eyes === "wide" ? 2 : 1;
+    fill(ctx, originX + 14, headY + 4, 1, eyeHeight, OUTLINE);
+    fill(ctx, originX + 18, headY + 4, 1, eyeHeight, OUTLINE);
+  }
+  fill(ctx, originX + 15, headY + 7, pose.eyes === "strain" ? 3 : 2, 1, OUTLINE);
+
+  outlinedRect(ctx, originX + 11, torsoY, 10, 10, shirt);
+  outlinedRect(ctx, originX + 8 + pose.leftArm, torsoY + 1, 3, 8, appearance.skinHex);
+  outlinedRect(ctx, originX + 21 + pose.rightArm, torsoY + 1, 3, 8, appearance.skinHex);
+
+  outlinedRect(ctx, originX + 11 + pose.leftLeg, hipY, 4, 8 - heightOffset, pants);
+  outlinedRect(ctx, originX + 17 + pose.rightLeg, hipY, 4, 8 - heightOffset, pants);
+  outlinedRect(ctx, originX + 10 + pose.leftLeg, originY + 29, 5, 2, SHOE);
+  outlinedRect(ctx, originX + 17 + pose.rightLeg, originY + 29, 5, 2, SHOE);
+}
+
+export function createCharacterCanvas(appearance: CharacterAppearance, frame = 0) {
+  const canvas = document.createElement("canvas");
+  canvas.width = CHARACTER_FRAME_WIDTH;
+  canvas.height = CHARACTER_FRAME_HEIGHT;
+  const ctx = canvas.getContext("2d");
+  if (!ctx) {
+    throw new Error("No se pudo crear el canvas del avatar.");
+  }
+  ctx.imageSmoothingEnabled = false;
+  drawCharacterFrame(ctx, frame, appearance);
+  return canvas;
+}
+
+export function ensureCharacterSpriteSheet(scene: Phaser.Scene, key: string, appearance: CharacterAppearance) {
   if (scene.textures.exists(key)) {
     scene.textures.remove(key);
   }
 
   const canvas = document.createElement("canvas");
-  canvas.width = FRAME_WIDTH * FRAME_COUNT;
-  canvas.height = FRAME_HEIGHT;
+  canvas.width = CHARACTER_FRAME_WIDTH * CHARACTER_FRAME_COUNT;
+  canvas.height = CHARACTER_FRAME_HEIGHT;
   const ctx = canvas.getContext("2d");
-
   if (!ctx) {
-    throw new Error("No se pudo crear el canvas del personaje.");
+    throw new Error("No se pudo crear el sprite sheet del personaje.");
   }
-
   ctx.imageSmoothingEnabled = false;
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-  for (let frame = 0; frame < FRAME_COUNT; frame += 1) {
-    drawHumanFrame(ctx, frame, options);
+  for (let frame = 0; frame < CHARACTER_FRAME_COUNT; frame += 1) {
+    drawCharacterFrame(ctx, frame, appearance, frame * CHARACTER_FRAME_WIDTH);
   }
 
-  scene.textures.addSpriteSheet(key, canvas, {
-    frameWidth: FRAME_WIDTH,
-    frameHeight: FRAME_HEIGHT
-  });
+  const texture = scene.textures.addCanvas(key, canvas);
+  if (!texture) {
+    throw new Error("No se pudo registrar el sprite sheet del personaje.");
+  }
+  for (let frame = 0; frame < CHARACTER_FRAME_COUNT; frame += 1) {
+    texture.add(
+      frame,
+      0,
+      frame * CHARACTER_FRAME_WIDTH,
+      0,
+      CHARACTER_FRAME_WIDTH,
+      CHARACTER_FRAME_HEIGHT
+    );
+  }
 
-  const idleKey = `${key}-idle`;
-  const walkKey = `${key}-walk`;
-  const sitKey = `${key}-sit`;
+  const animationKeys = {
+    idle: `${key}-idle`,
+    walk: `${key}-walk`,
+    work: `${key}-work`,
+    reaction: `${key}-reaction`
+  };
 
-  if (scene.anims.exists(idleKey)) scene.anims.remove(idleKey);
-  if (scene.anims.exists(walkKey)) scene.anims.remove(walkKey);
-  if (scene.anims.exists(sitKey)) scene.anims.remove(sitKey);
+  for (const animationKey of Object.values(animationKeys)) {
+    if (scene.anims.exists(animationKey)) scene.anims.remove(animationKey);
+  }
 
   scene.anims.create({
-    key: idleKey,
-    frames: scene.anims.generateFrameNumbers(key, { start: 0, end: 1 }),
-    frameRate: 2,
+    key: animationKeys.idle,
+    frames: scene.anims.generateFrameNumbers(key, { start: 0, end: 3 }),
+    frameRate: 4,
     repeat: -1
   });
-
   scene.anims.create({
-    key: walkKey,
-    frames: scene.anims.generateFrameNumbers(key, { start: 2, end: 5 }),
+    key: animationKeys.walk,
+    frames: scene.anims.generateFrameNumbers(key, { start: 4, end: 7 }),
     frameRate: 8,
     repeat: -1
   });
-
   scene.anims.create({
-    key: sitKey,
-    frames: scene.anims.generateFrameNumbers(key, { start: 6, end: 7 }),
+    key: animationKeys.work,
+    frames: scene.anims.generateFrameNumbers(key, { start: 8, end: 9 }),
     frameRate: 3,
     repeat: -1
   });
+  scene.anims.create({
+    key: animationKeys.reaction,
+    frames: [{ key, frame: 11 }, { key, frame: 0 }],
+    frameRate: 10,
+    repeat: 0
+  });
 
-  return {
-    textureKey: key,
-    frameWidth: FRAME_WIDTH,
-    frameHeight: FRAME_HEIGHT,
-    idleKey,
-    walkKey,
-    sitKey
-  };
+  return { textureKey: key, ...animationKeys };
 }

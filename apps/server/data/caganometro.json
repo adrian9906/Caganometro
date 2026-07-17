@@ -1,399 +1,175 @@
 {
   "accounts": [
     {
-      "id": 1,
-      "username": "TestCaga11069",
-      "passwordHash": "$2b$10$vXGzxMoYicjw6WC.HytbtOnveRSZRblDu/cenoFt0Jfh9oqZvo.Iy",
-      "activeCharacterId": 1,
-      "fechaCreacion": "2026-06-23T19:01:17.041Z"
-    },
-    {
-      "id": 2,
-      "username": "Adrian",
-      "passwordHash": "$2b$10$0t1lcNEF5JBoTnUtTx0djOERWuhVWmbQUIZS53.rgQiHpuASh1QIG",
-      "activeCharacterId": 2,
-      "fechaCreacion": "2026-06-23T19:15:21.488Z"
-    },
-    {
-      "id": 3,
-      "username": "cuenta5920",
-      "passwordHash": "$2b$10$svzQbJGsCO0suPDxhrHQ4eZ5doyndvO.LfsjLtRoYnk94jVTuD4hW",
-      "activeCharacterId": 4,
-      "fechaCreacion": "2026-06-23T19:33:52.308Z"
-    },
-    {
-      "id": 4,
-      "username": "demo123",
-      "passwordHash": "$2b$10$qBc/zApoIlwZ1GFoNKUcK.CM75yuATr2PTrdXJK94LsVbKhaW/V4G",
-      "activeCharacterId": null,
-      "fechaCreacion": "2026-06-23T19:44:26.491Z"
-    },
-    {
-      "id": 5,
-      "username": "hub6777",
-      "passwordHash": "$2b$10$0dM/V5B28EuhP/9sO0O/r.BaM8W8WI1gXJUPOh2g7NdKb4nc9D4HS",
-      "activeCharacterId": 5,
-      "fechaCreacion": "2026-06-23T20:38:13.930Z"
+      "id": 7,
+      "username": "adriandfl",
+      "passwordHash": "$2b$10$S.tvEfjoS5B3IYc8S2UZ1ursul0Eiv8RxiqmoIbvz1tDhzToA28Gy",
+      "activeCharacterId": 8,
+      "fechaCreacion": "2026-07-15T19:33:34.584Z"
     }
   ],
   "characters": [
     {
-      "nickname": "TestCaga11069",
-      "descripcion": "",
-      "habilidades": "",
-      "fortalezas": "",
-      "debilidades": "",
-      "id": 1,
-      "accountId": 1,
-      "nombre": "TestCaga11069",
-      "edad": 24,
-      "estatura": 1.78,
-      "colorPelo": "negro",
-      "colorPiel": "#f4c8a8",
-      "colorActual": "#d8ac8c",
+      "nickname": "el cacas",
+      "descripcion": "El se hace el fit pero caga con muvha peste",
+      "habilidades": "caca color mierda, abuso de papel",
+      "fortalezas": "mojon consistente, sentado perfecto",
+      "debilidades": "las tazas que no descargan",
+      "id": 7,
+      "accountId": 7,
+      "fechaCreacion": "2026-07-15T20:46:47.462Z",
+      "ultimaCaca": "2026-07-17T18:15:50.845Z",
       "totalCacas": 1,
       "tamano": 1.12,
       "fuerza": 7,
-      "ultimaCaca": "2026-06-23T19:01:46.912Z",
-      "fechaCreacion": "2026-06-23T19:01:17.041Z"
-    },
-    {
-      "nickname": "Adrian",
-      "descripcion": "",
-      "habilidades": "",
-      "fortalezas": "",
-      "debilidades": "",
-      "id": 2,
-      "accountId": 2,
       "nombre": "Adrian",
-      "edad": 18,
-      "estatura": 1.5,
+      "edad": 27,
+      "estatura": 1.7,
       "colorPelo": "negro",
-      "colorPiel": "#f4c8a8",
-      "colorActual": "#f4c8a8",
-      "totalCacas": 0,
-      "tamano": 1,
-      "fuerza": 5,
-      "ultimaCaca": null,
-      "fechaCreacion": "2026-06-23T19:15:21.488Z"
-    },
-    {
-      "nickname": "PixelBro",
-      "descripcion": "",
-      "habilidades": "",
-      "fortalezas": "",
-      "debilidades": "",
-      "id": 3,
-      "accountId": 3,
-      "fechaCreacion": "2026-06-23T19:36:00.173Z",
-      "ultimaCaca": null,
-      "totalCacas": 0,
-      "tamano": 1,
-      "fuerza": 5,
-      "nombre": "PixelBro",
-      "edad": 21,
-      "estatura": 1.82,
-      "colorPelo": "rojo",
-      "colorPiel": "#d9a074",
-      "colorActual": "#d9a074"
-    },
-    {
-      "nickname": "MintQueen",
-      "descripcion": "",
-      "habilidades": "",
-      "fortalezas": "",
-      "debilidades": "",
-      "id": 4,
-      "accountId": 3,
-      "fechaCreacion": "2026-06-23T19:36:00.249Z",
-      "ultimaCaca": "2026-06-23T19:36:00.444Z",
-      "totalCacas": 1,
-      "tamano": 1.12,
-      "fuerza": 7,
-      "nombre": "MintQueen",
-      "edad": 19,
-      "estatura": 1.66,
-      "colorPelo": "rubio",
       "colorPiel": "#f4c8a8",
       "colorActual": "#d8ac8c"
     },
     {
-      "nickname": "ElTanque",
-      "descripcion": "Un veterano del trono con pasos pesados.",
-      "habilidades": "Resistencia intestinal, sprint al ba�o",
-      "fortalezas": "Aguanta mucho, sube de nivel rapido",
-      "debilidades": "Se cansa despues de una cadena larga",
-      "id": 5,
-      "accountId": 5,
-      "fechaCreacion": "2026-06-23T20:38:14.078Z",
-      "ultimaCaca": null,
-      "totalCacas": 0,
-      "tamano": 1,
-      "fuerza": 5,
-      "nombre": "PanzaMax",
-      "edad": 27,
-      "estatura": 1.84,
+      "nickname": "Cagaluro",
+      "descripcion": "Le encanta reflexionar sobre la caca",
+      "habilidades": "Caca un poco espesa, le pesa la caca",
+      "fortalezas": "Cacas en torpedo",
+      "debilidades": "El mango",
+      "id": 8,
+      "accountId": 7,
+      "fechaCreacion": "2026-07-17T15:09:06.894Z",
+      "ultimaCaca": "2026-07-17T18:15:59.678Z",
+      "totalCacas": 1,
+      "tamano": 1.12,
+      "fuerza": 7,
+      "nombre": "Yoan",
+      "edad": 25,
+      "estatura": 1.7,
       "colorPelo": "negro",
-      "colorPiel": "#d9a074",
-      "colorActual": "#d9a074"
+      "colorPiel": "#f4c8a8",
+      "colorActual": "#d8ac8c"
     }
   ],
   "historialCacas": [
     {
-      "id": 1,
-      "personajeId": 1,
-      "fechaHora": "2026-06-23T19:01:46.911Z",
+      "id": 43,
+      "fechaHora": "2026-07-15T20:48:29.837Z",
+      "personajeId": 7,
       "tamanoAntes": 1,
       "fuerzaAntes": 5,
       "colorAntes": "#f4c8a8"
     },
     {
-      "id": 2,
-      "personajeId": 2,
-      "fechaHora": "2026-06-23T19:19:02.658Z",
-      "tamanoAntes": 1,
-      "fuerzaAntes": 5,
-      "colorAntes": "#f4c8a8"
-    },
-    {
-      "id": 3,
-      "personajeId": 2,
-      "fechaHora": "2026-06-23T19:19:06.436Z",
+      "id": 44,
+      "fechaHora": "2026-07-15T20:49:19.916Z",
+      "personajeId": 7,
       "tamanoAntes": 1.12,
       "fuerzaAntes": 7,
       "colorAntes": "#d8ac8c"
     },
     {
-      "id": 4,
-      "personajeId": 2,
-      "fechaHora": "2026-06-23T19:19:08.922Z",
+      "id": 45,
+      "fechaHora": "2026-07-15T20:49:28.460Z",
+      "personajeId": 7,
       "tamanoAntes": 1.24,
       "fuerzaAntes": 9,
       "colorAntes": "#bc9070"
     },
     {
-      "id": 5,
-      "personajeId": 2,
-      "fechaHora": "2026-06-23T19:19:11.720Z",
-      "tamanoAntes": 1.36,
-      "fuerzaAntes": 11,
-      "colorAntes": "#a07454"
-    },
-    {
-      "id": 6,
-      "personajeId": 2,
-      "fechaHora": "2026-06-23T19:19:14.510Z",
-      "tamanoAntes": 1.48,
-      "fuerzaAntes": 13,
-      "colorAntes": "#845838"
-    },
-    {
-      "id": 7,
-      "personajeId": 2,
-      "fechaHora": "2026-06-23T19:19:17.220Z",
-      "tamanoAntes": 1.6,
-      "fuerzaAntes": 15,
-      "colorAntes": "#683c1c"
-    },
-    {
-      "id": 8,
-      "personajeId": 2,
-      "fechaHora": "2026-06-23T19:19:19.974Z",
-      "tamanoAntes": 1.72,
-      "fuerzaAntes": 17,
-      "colorAntes": "#4c2000"
-    },
-    {
-      "id": 9,
-      "personajeId": 2,
-      "fechaHora": "2026-06-23T19:19:22.519Z",
-      "tamanoAntes": 1.84,
-      "fuerzaAntes": 19,
-      "colorAntes": "#300400"
-    },
-    {
-      "id": 10,
-      "personajeId": 2,
-      "fechaHora": "2026-06-23T19:19:25.269Z",
-      "tamanoAntes": 1.96,
-      "fuerzaAntes": 21,
-      "colorAntes": "#140000"
-    },
-    {
-      "id": 11,
-      "personajeId": 2,
-      "fechaHora": "2026-06-23T19:19:28.418Z",
-      "tamanoAntes": 2.08,
-      "fuerzaAntes": 23,
-      "colorAntes": "#f7f3ea"
-    },
-    {
-      "id": 12,
-      "personajeId": 2,
-      "fechaHora": "2026-06-23T19:19:31.163Z",
-      "tamanoAntes": 2.2,
-      "fuerzaAntes": 25,
-      "colorAntes": "#dbd7ce"
-    },
-    {
-      "id": 13,
-      "personajeId": 2,
-      "fechaHora": "2026-06-23T19:19:33.885Z",
-      "tamanoAntes": 2.32,
-      "fuerzaAntes": 27,
-      "colorAntes": "#bfbbb2"
-    },
-    {
-      "id": 14,
-      "personajeId": 2,
-      "fechaHora": "2026-06-23T19:19:38.611Z",
-      "tamanoAntes": 2.44,
-      "fuerzaAntes": 29,
-      "colorAntes": "#a39f96"
-    },
-    {
-      "id": 15,
-      "fechaHora": "2026-06-23T19:36:00.443Z",
-      "personajeId": 4,
+      "id": 46,
+      "fechaHora": "2026-07-17T13:10:40.744Z",
+      "personajeId": 7,
       "tamanoAntes": 1,
       "fuerzaAntes": 5,
       "colorAntes": "#f4c8a8"
     },
     {
-      "id": 16,
-      "fechaHora": "2026-06-23T20:05:15.629Z",
-      "personajeId": 2,
-      "tamanoAntes": 2.56,
-      "fuerzaAntes": 31,
-      "colorAntes": "#87837a"
+      "id": 47,
+      "fechaHora": "2026-07-17T13:10:57.259Z",
+      "personajeId": 7,
+      "tamanoAntes": 1.12,
+      "fuerzaAntes": 7,
+      "colorAntes": "#d8ac8c"
     },
     {
-      "id": 17,
-      "fechaHora": "2026-06-23T20:05:19.487Z",
-      "personajeId": 2,
-      "tamanoAntes": 2.68,
-      "fuerzaAntes": 33,
-      "colorAntes": "#6b675e"
-    },
-    {
-      "id": 18,
-      "fechaHora": "2026-06-23T20:05:22.655Z",
-      "personajeId": 2,
-      "tamanoAntes": 2.8,
-      "fuerzaAntes": 35,
-      "colorAntes": "#4f4b42"
-    },
-    {
-      "id": 19,
-      "fechaHora": "2026-06-23T20:05:25.474Z",
-      "personajeId": 2,
-      "tamanoAntes": 2.92,
-      "fuerzaAntes": 37,
-      "colorAntes": "#332f26"
-    },
-    {
-      "id": 20,
-      "fechaHora": "2026-06-23T20:05:28.770Z",
-      "personajeId": 2,
-      "tamanoAntes": 3.04,
-      "fuerzaAntes": 39,
-      "colorAntes": "#17130a"
-    },
-    {
-      "id": 21,
-      "fechaHora": "2026-06-23T20:05:32.085Z",
-      "personajeId": 2,
-      "tamanoAntes": 3.16,
-      "fuerzaAntes": 41,
-      "colorAntes": "#f7f3ea"
-    },
-    {
-      "id": 22,
-      "fechaHora": "2026-06-23T20:05:39.354Z",
-      "personajeId": 2,
-      "tamanoAntes": 3.28,
-      "fuerzaAntes": 43,
-      "colorAntes": "#dbd7ce"
-    },
-    {
-      "id": 23,
-      "fechaHora": "2026-06-23T20:05:42.478Z",
-      "personajeId": 2,
-      "tamanoAntes": 3.4,
-      "fuerzaAntes": 45,
-      "colorAntes": "#bfbbb2"
-    },
-    {
-      "id": 24,
-      "fechaHora": "2026-06-23T20:24:32.154Z",
-      "personajeId": 2,
-      "tamanoAntes": 3.52,
-      "fuerzaAntes": 47,
-      "colorAntes": "#a39f96"
-    },
-    {
-      "id": 25,
-      "fechaHora": "2026-06-23T20:24:37.003Z",
-      "personajeId": 2,
-      "tamanoAntes": 3.64,
-      "fuerzaAntes": 49,
-      "colorAntes": "#87837a"
-    },
-    {
-      "id": 26,
-      "fechaHora": "2026-06-23T20:24:41.330Z",
-      "personajeId": 2,
-      "tamanoAntes": 3.76,
-      "fuerzaAntes": 51,
-      "colorAntes": "#6b675e"
-    },
-    {
-      "id": 27,
-      "fechaHora": "2026-06-23T20:24:45.658Z",
-      "personajeId": 2,
-      "tamanoAntes": 3.88,
-      "fuerzaAntes": 53,
-      "colorAntes": "#4f4b42"
-    },
-    {
-      "id": 28,
-      "fechaHora": "2026-06-23T20:26:54.303Z",
-      "personajeId": 2,
-      "tamanoAntes": 4,
-      "fuerzaAntes": 55,
-      "colorAntes": "#332f26"
-    },
-    {
-      "id": 29,
-      "fechaHora": "2026-06-23T20:26:59.038Z",
-      "personajeId": 2,
-      "tamanoAntes": 4.12,
-      "fuerzaAntes": 57,
-      "colorAntes": "#17130a"
-    },
-    {
-      "id": 30,
-      "fechaHora": "2026-06-23T20:27:05.680Z",
-      "personajeId": 2,
-      "tamanoAntes": 4.24,
-      "fuerzaAntes": 59,
-      "colorAntes": "#f7f3ea"
-    },
-    {
-      "id": 31,
-      "fechaHora": "2026-06-23T20:27:10.129Z",
-      "personajeId": 2,
-      "tamanoAntes": 4.36,
-      "fuerzaAntes": 61,
-      "colorAntes": "#dbd7ce"
-    },
-    {
-      "id": 32,
-      "fechaHora": "2026-06-23T20:38:14.206Z",
-      "personajeId": 5,
+      "id": 48,
+      "fechaHora": "2026-07-17T15:09:27.914Z",
+      "personajeId": 8,
       "tamanoAntes": 1,
       "fuerzaAntes": 5,
-      "colorAntes": "#d9a074"
+      "colorAntes": "#f4c8a8"
+    },
+    {
+      "id": 49,
+      "fechaHora": "2026-07-17T15:09:37.110Z",
+      "personajeId": 8,
+      "tamanoAntes": 1.12,
+      "fuerzaAntes": 7,
+      "colorAntes": "#d8ac8c"
+    },
+    {
+      "id": 50,
+      "fechaHora": "2026-07-17T15:09:45.758Z",
+      "personajeId": 7,
+      "tamanoAntes": 1,
+      "fuerzaAntes": 5,
+      "colorAntes": "#f4c8a8"
+    },
+    {
+      "id": 51,
+      "fechaHora": "2026-07-17T15:09:52.072Z",
+      "personajeId": 7,
+      "tamanoAntes": 1.12,
+      "fuerzaAntes": 7,
+      "colorAntes": "#d8ac8c"
+    },
+    {
+      "id": 52,
+      "fechaHora": "2026-07-17T15:09:58.616Z",
+      "personajeId": 7,
+      "tamanoAntes": 1.24,
+      "fuerzaAntes": 9,
+      "colorAntes": "#bc9070"
+    },
+    {
+      "id": 53,
+      "fechaHora": "2026-07-17T15:10:09.838Z",
+      "personajeId": 7,
+      "tamanoAntes": 1.36,
+      "fuerzaAntes": 11,
+      "colorAntes": "#a07454"
+    },
+    {
+      "id": 54,
+      "fechaHora": "2026-07-17T15:42:05.107Z",
+      "personajeId": 8,
+      "tamanoAntes": 1.24,
+      "fuerzaAntes": 9,
+      "colorAntes": "#bc9070"
+    },
+    {
+      "id": 55,
+      "fechaHora": "2026-07-17T15:42:13.009Z",
+      "personajeId": 7,
+      "tamanoAntes": 1.48,
+      "fuerzaAntes": 13,
+      "colorAntes": "#845838"
+    },
+    {
+      "id": 56,
+      "fechaHora": "2026-07-17T18:15:50.840Z",
+      "personajeId": 7,
+      "tamanoAntes": 1,
+      "fuerzaAntes": 5,
+      "colorAntes": "#f4c8a8"
+    },
+    {
+      "id": 57,
+      "fechaHora": "2026-07-17T18:15:59.675Z",
+      "personajeId": 8,
+      "tamanoAntes": 1,
+      "fuerzaAntes": 5,
+      "colorAntes": "#f4c8a8"
     }
   ]
 }
