@@ -3,6 +3,6 @@ import { app } from "./app.js";
 
 const port = Number(process.env.PORT ?? 3000);
 
-app.listen(port, () => {
-  console.log(`Caganometro API lista en http://localhost:${port}`);
+app.listen(port, "0.0.0.0", () => {
+  console.log(`Caganometro API lista en el puerto ${port}`);
 });

@@ -58,6 +58,29 @@ export const ANIMATION_TIMING = {
   chairReset: 180
 } as const;
 
+export const OFFICE_STORY = {
+  intro:
+    "Esta es una oficina con muchos dolores de barriga. Empieza una jornada muy laboriosa y muy dolorosa en la barriga.",
+  selectedCharacter: "¡Estoy listo para cagar!",
+  bathroomRush: ["¡No llego, no llego, no llego!", "¡Me cago, me cago, me cago!"]
+} as const;
+
+export const WORKDAY_TIMING = {
+  startHour: 8,
+  middayHour: 12,
+  endHour: 17,
+  durationMs: 135_000,
+  clockTickMs: 250,
+  introHoldMs: 5_500,
+  speechHoldMs: 1_800
+} as const;
+
+export const WORKDAY_ATMOSPHERE = {
+  morning: { color: 0xffffff, alpha: 0 },
+  midday: { color: 0xffc06a, alpha: 0.12 },
+  night: { color: 0x14264c, alpha: 0.56 }
+} as const;
+
 export function getVisualScale(size: number) {
   return Math.max(1, Math.min(3, Math.round(size)));
 }

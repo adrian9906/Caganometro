@@ -240,12 +240,13 @@ export default function App() {
     const previousCharacter = activeCharacter;
     setActiveCharacter(selectedCharacter);
     setIsSelectingCharacter(true);
-    setStatus(`${selectedCharacter.nombre} tiene el turno del baño.`);
+    gameRef.current?.announceCharacterSelection(selectedCharacter.id, selectedCharacter.nombre);
+    setStatus(`${selectedCharacter.nombre}: ¡Estoy listo para cagar!`);
     try {
       const data = await selectCharacter(token, characterId);
       setCharacters(data.personajes);
       setActiveCharacter(data.personajeActivo);
-      setStatus(`${data.personajeActivo.nombre} tiene el turno del baño.`);
+      setStatus(`${data.personajeActivo.nombre}: ¡Estoy listo para cagar!`);
     } catch (error) {
       setActiveCharacter(previousCharacter);
       setStatus(error instanceof Error ? error.message : "No se pudo seleccionar el personaje.");

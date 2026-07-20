@@ -4,7 +4,7 @@
       "id": 7,
       "username": "adriandfl",
       "passwordHash": "$2b$10$S.tvEfjoS5B3IYc8S2UZ1ursul0Eiv8RxiqmoIbvz1tDhzToA28Gy",
-      "activeCharacterId": 8,
+      "activeCharacterId": 7,
       "fechaCreacion": "2026-07-15T19:33:34.584Z"
     }
   ],
@@ -18,16 +18,16 @@
       "id": 7,
       "accountId": 7,
       "fechaCreacion": "2026-07-15T20:46:47.462Z",
-      "ultimaCaca": "2026-07-17T18:15:50.845Z",
-      "totalCacas": 1,
-      "tamano": 1.12,
-      "fuerza": 7,
+      "ultimaCaca": null,
+      "totalCacas": 0,
+      "tamano": 1,
+      "fuerza": 5,
       "nombre": "Adrian",
       "edad": 27,
       "estatura": 1.7,
       "colorPelo": "negro",
       "colorPiel": "#f4c8a8",
-      "colorActual": "#d8ac8c"
+      "colorActual": "#f4c8a8"
     },
     {
       "nickname": "Cagaluro",
@@ -38,16 +38,16 @@
       "id": 8,
       "accountId": 7,
       "fechaCreacion": "2026-07-17T15:09:06.894Z",
-      "ultimaCaca": "2026-07-17T18:15:59.678Z",
-      "totalCacas": 1,
-      "tamano": 1.12,
-      "fuerza": 7,
+      "ultimaCaca": null,
+      "totalCacas": 0,
+      "tamano": 1,
+      "fuerza": 5,
       "nombre": "Yoan",
       "edad": 25,
       "estatura": 1.7,
       "colorPelo": "negro",
       "colorPiel": "#f4c8a8",
-      "colorActual": "#d8ac8c"
+      "colorActual": "#f4c8a8"
     }
   ],
   "historialCacas": [
@@ -167,6 +167,46 @@
       "id": 57,
       "fechaHora": "2026-07-17T18:15:59.675Z",
       "personajeId": 8,
+      "tamanoAntes": 1,
+      "fuerzaAntes": 5,
+      "colorAntes": "#f4c8a8"
+    },
+    {
+      "id": 58,
+      "fechaHora": "2026-07-20T13:41:24.688Z",
+      "personajeId": 8,
+      "tamanoAntes": 1.12,
+      "fuerzaAntes": 7,
+      "colorAntes": "#d8ac8c"
+    },
+    {
+      "id": 59,
+      "fechaHora": "2026-07-20T13:56:18.005Z",
+      "personajeId": 7,
+      "tamanoAntes": 1,
+      "fuerzaAntes": 5,
+      "colorAntes": "#f4c8a8"
+    },
+    {
+      "id": 60,
+      "fechaHora": "2026-07-20T13:56:28.935Z",
+      "personajeId": 7,
+      "tamanoAntes": 1.12,
+      "fuerzaAntes": 7,
+      "colorAntes": "#d8ac8c"
+    },
+    {
+      "id": 61,
+      "fechaHora": "2026-07-20T13:56:34.924Z",
+      "personajeId": 7,
+      "tamanoAntes": 1.24,
+      "fuerzaAntes": 9,
+      "colorAntes": "#bc9070"
+    },
+    {
+      "id": 62,
+      "fechaHora": "2026-07-20T14:12:09.929Z",
+      "personajeId": 7,
       "tamanoAntes": 1,
       "fuerzaAntes": 5,
       "colorAntes": "#f4c8a8"

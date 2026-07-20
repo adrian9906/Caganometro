@@ -69,6 +69,10 @@ export class CaganometroGame {
     this.scene.updateRoster(roster, activeCharacterId);
   }
 
+  announceCharacterSelection(characterId: number, name: string) {
+    this.bus.emit("character:selected", { characterId, name });
+  }
+
   playPoopAnimation(characterId: number) {
     if (this.requestInFlight) return false;
     primeFartSound();

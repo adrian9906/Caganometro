@@ -54,7 +54,7 @@ export type LeaderboardEntry = {
   medalla: "oro" | "plata" | "bronce" | null;
 };
 
-const API_URL = (window as Window & { __API_URL__?: string }).__API_URL__ ?? "http://localhost:3000";
+const API_URL = (import.meta.env.VITE_API_URL ?? "http://localhost:3000").replace(/\/$/, "");
 
 async function request<T>(path: string, init?: RequestInit): Promise<T> {
   const response = await fetch(`${API_URL}${path}`, {

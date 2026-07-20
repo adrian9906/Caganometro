@@ -3,6 +3,7 @@ import type { PoopErrorPayload, PoopEventPayload } from "./types";
 
 export type GameEventMap = {
   "scene:ready": undefined;
+  "character:selected": { characterId: number; name: string };
   "poop:midpoint": PoopEventPayload;
   "poop:success": PoopEventPayload;
   "poop:error": PoopErrorPayload;

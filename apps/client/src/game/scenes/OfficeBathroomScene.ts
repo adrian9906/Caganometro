@@ -8,12 +8,16 @@ import {
   OFFICE_AISLE_Y,
   OFFICE_BATHROOM_X,
   OFFICE_SEATS,
+  OFFICE_STORY,
   TOILET_SEAT_Y,
   TOILET_X,
+  WORKDAY_ATMOSPHERE,
+  WORKDAY_TIMING,
   getVisualScale
 } from "../constants";
 import { GameEventBus } from "../GameEventBus";
 import { playFartSound } from "../fartSound";
+import { PixelText } from "../pixelText";
 import { ensureCharacterSpriteSheet } from "../pixelSpriteSheet";
 import type { SceneCharacter } from "../types";
 
@@ -37,6 +41,22 @@ type PendingRoster = {
 
 const SHIRT_PALETTE = ["#8b4513", "#235b75", "#8b3654", "#6d5a25", "#4c5f35", "#704a80"];
 const PANTS_PALETTE = ["#355f48", "#344c68", "#593d32"];
+
+function mixColor(from: number, to: number, amount: number) {
+  const t = Phaser.Math.Clamp(amount, 0, 1);
+  const fromRed = (from >> 16) & 0xff;
+  const fromGreen = (from >> 8) & 0xff;
+  const fromBlue = from & 0xff;
+  const toRed = (to >> 16) & 0xff;
+  const toGreen = (to >> 8) & 0xff;
+  const toBlue = to & 0xff;
+  return Phaser.Display.Color.GetColor(
+    Math.round(Phaser.Math.Linear(fromRed, toRed, t)),
+    Math.round(Phaser.Math.Linear(fromGreen, toGreen, t)),
+    Math.round(Phaser.Math.Linear(fromBlue, toBlue, t))
+  );
+}
+
 const PIXEL_GLYPHS: Readonly<Record<string, readonly string[]>> = {
   " ": ["00000", "00000", "00000", "00000", "00000", "00000", "00000"],
   A: ["01110", "10001", "10001", "11111", "10001", "10001", "10001"],
@@ -62,7 +82,17 @@ export class OfficeBathroomScene extends Phaser.Scene {
   private pendingRoster: PendingRoster | null = null;
   private chairs: Phaser.GameObjects.Rectangle[] = [];
   private door?: Phaser.GameObjects.Rectangle;
-  private poopText?: Phaser.GameObjects.Text;
+  private poopText?: PixelText;
+  private atmosphereOverlay?: Phaser.GameObjects.Rectangle;
+  private clockText?: PixelText;
+  private clockPhaseText?: PixelText;
+  private clockEvent?: Phaser.Time.TimerEvent;
+  private selectionSpeech?: Phaser.GameObjects.Container;
+  private selectionSpeechTween?: Phaser.Tweens.Tween;
+  private selectionSpeechCharacterId: number | null = null;
+  private lastBathroomRushMessage?: string;
+  private workdayStartedAt = 0;
+  private offCharacterSelected?: () => void;
   private isReady = false;
   private isAnimating = false;
 
@@ -76,20 +106,35 @@ export class OfficeBathroomScene extends Phaser.Scene {
     this.drawBackground();
     this.drawOfficeFurniture();
     this.drawBathroom();
-    this.poopText = this.add
-      .text(276, 76, "PRRRT!", {
-        fontFamily: "monospace",
-        fontSize: "11px",
-        color: "#6c2f00",
-        stroke: "#ffc29f",
-        strokeThickness: 2
-      })
-      .setOrigin(0.5)
+    this.createWorkdayClock();
+    this.poopText = new PixelText(this, 276, 76, "PRRRT!", {
+      color: 0x6c2f00,
+      pixelSize: 1
+    })
       .setDepth(900)
       .setAlpha(0);
+    this.offCharacterSelected = this.gameBus.on("character:selected", ({ characterId }) => {
+      this.showCharacterSpeech(characterId);
+    });
+    this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
+      this.clockEvent?.remove();
+      this.offCharacterSelected?.();
+      this.offCharacterSelected = undefined;
+    });
     this.isReady = true;
     this.rebuildRoster();
+    this.showIntroStory();
     this.gameBus.emit("scene:ready", undefined);
+  }
+
+  update() {
+    if (!this.selectionSpeech || this.selectionSpeechCharacterId === null) return;
+    const view = this.characterViews.get(this.selectionSpeechCharacterId);
+    if (!view) return;
+    this.selectionSpeech.setPosition(
+      Math.round(Phaser.Math.Clamp(view.container.x, 72, GAME_WIDTH - 72)),
+      Math.round(Math.max(31, view.container.y - 49))
+    );
   }
 
   updateRoster(roster: SceneCharacter[], activeCharacterId: number | null) {
@@ -130,6 +175,7 @@ export class OfficeBathroomScene extends Phaser.Scene {
       ]);
 
       this.playAnimation(view, "walk");
+      this.showCharacterSpeech(view.character.id, this.getBathroomRushMessage());
       await this.walkTo(view, view.homeX, OFFICE_AISLE_Y, ANIMATION_TIMING.walkVertical);
       await this.walkTo(view, BATHROOM_DOOR_X - 8, OFFICE_AISLE_Y, ANIMATION_TIMING.walkOffice);
       await this.tweenTo(this.door, { alpha: 0.22, duration: 120, ease: "Linear" });
@@ -264,6 +310,178 @@ export class OfficeBathroomScene extends Phaser.Scene {
         onComplete: () => particle.destroy()
       });
     }
+  }
+
+  private createWorkdayClock() {
+    this.workdayStartedAt = this.time.now;
+    this.atmosphereOverlay = this.add
+      .rectangle(0, 0, GAME_WIDTH, GAME_HEIGHT, WORKDAY_ATMOSPHERE.morning.color, 0)
+      .setOrigin(0)
+      .setDepth(800);
+
+    const clockPlate = this.add
+      .rectangle(194, 13, 68, 20, 0x141b1a, 0.92)
+      .setStrokeStyle(1, GAME_COLORS.accent)
+      .setDepth(1_000);
+    this.clockText = new PixelText(this, clockPlate.x, 8, "08:00 AM", {
+      color: 0xfff4bd,
+      pixelSize: 1
+    }).setDepth(1_001);
+    this.clockPhaseText = new PixelText(this, clockPlate.x, 18, "DÍA", {
+      color: 0xa9e7c9,
+      pixelSize: 1
+    }).setDepth(1_001);
+
+    this.updateWorkdayClock();
+  }
+
+  private startWorkdayClock() {
+    this.workdayStartedAt = this.time.now;
+    this.updateWorkdayClock();
+    this.clockEvent = this.time.addEvent({
+      delay: WORKDAY_TIMING.clockTickMs,
+      loop: true,
+      callback: this.updateWorkdayClock,
+      callbackScope: this
+    });
+  }
+
+  private updateWorkdayClock() {
+    const progress = Phaser.Math.Clamp(
+      (this.time.now - this.workdayStartedAt) / WORKDAY_TIMING.durationMs,
+      0,
+      1
+    );
+    const totalWorkdayMinutes = (WORKDAY_TIMING.endHour - WORKDAY_TIMING.startHour) * 60;
+    const currentMinutes = WORKDAY_TIMING.startHour * 60 + Math.floor(totalWorkdayMinutes * progress);
+    const hour24 = Math.floor(currentMinutes / 60);
+    const minute = currentMinutes % 60;
+    const hour12 = hour24 % 12 || 12;
+    const meridiem = hour24 < 12 ? "AM" : "PM";
+    this.clockText?.setText(`${hour12.toString().padStart(2, "0")}:${minute.toString().padStart(2, "0")} ${meridiem}`);
+
+    const middayMinutes = WORKDAY_TIMING.middayHour * 60;
+    let color: number;
+    let alpha: number;
+    let phase: string;
+    if (currentMinutes <= middayMinutes) {
+      const morningProgress =
+        (currentMinutes - WORKDAY_TIMING.startHour * 60) /
+        ((WORKDAY_TIMING.middayHour - WORKDAY_TIMING.startHour) * 60);
+      color = mixColor(WORKDAY_ATMOSPHERE.morning.color, WORKDAY_ATMOSPHERE.midday.color, morningProgress);
+      alpha = Phaser.Math.Linear(WORKDAY_ATMOSPHERE.morning.alpha, WORKDAY_ATMOSPHERE.midday.alpha, morningProgress);
+      phase = currentMinutes < middayMinutes ? "DÍA" : "MEDIODÍA";
+    } else {
+      const eveningProgress =
+        (currentMinutes - middayMinutes) /
+        ((WORKDAY_TIMING.endHour - WORKDAY_TIMING.middayHour) * 60);
+      color = mixColor(WORKDAY_ATMOSPHERE.midday.color, WORKDAY_ATMOSPHERE.night.color, eveningProgress);
+      alpha = Phaser.Math.Linear(WORKDAY_ATMOSPHERE.midday.alpha, WORKDAY_ATMOSPHERE.night.alpha, eveningProgress);
+      phase = progress >= 1 ? "NOCHE" : "ATARDECER";
+    }
+    this.atmosphereOverlay?.setFillStyle(color, alpha);
+    this.clockPhaseText?.setText(phase);
+
+    if (progress >= 1) {
+      this.clockEvent?.remove();
+      this.clockEvent = undefined;
+    }
+  }
+
+  private showIntroStory() {
+    const panel = this.add.container(GAME_WIDTH / 2, GAME_HEIGHT / 2 - 2).setDepth(1_100).setAlpha(0).setScale(0.94);
+    const backdrop = this.add
+      .rectangle(0, 0, 288, 82, 0x111716, 0.96)
+      .setStrokeStyle(2, GAME_COLORS.accent)
+      .setInteractive({ useHandCursor: true });
+    const kicker = new PixelText(this, 0, -29, "08:00 AM · COMIENZA LA JORNADA", {
+      color: 0xffdf59,
+      pixelSize: 1
+    });
+    const story = new PixelText(this, 0, 1, OFFICE_STORY.intro, {
+      color: 0xf7f5ef,
+      pixelSize: 1,
+      maxWidth: 258,
+      lineSpacing: 2
+    });
+    const hint = new PixelText(this, 0, 32, "CLIC PARA CONTINUAR", {
+      color: 0x9bcfb5,
+      pixelSize: 1
+    });
+    panel.add([backdrop, kicker, story, hint]);
+
+    let closing = false;
+    const closeIntro = () => {
+      if (closing || !panel.active) return;
+      closing = true;
+      autoClose.remove();
+      this.startWorkdayClock();
+      this.tweens.add({
+        targets: panel,
+        alpha: 0,
+        y: panel.y - 6,
+        duration: 260,
+        ease: "Quad.easeIn",
+        onComplete: () => panel.destroy(true)
+      });
+    };
+    backdrop.once("pointerdown", closeIntro);
+    this.tweens.add({
+      targets: panel,
+      alpha: 1,
+      scaleX: 1,
+      scaleY: 1,
+      duration: 320,
+      ease: "Back.easeOut"
+    });
+    const autoClose = this.time.delayedCall(WORKDAY_TIMING.introHoldMs, closeIntro);
+  }
+
+  private getBathroomRushMessage() {
+    const choices = OFFICE_STORY.bathroomRush.filter((message) => message !== this.lastBathroomRushMessage);
+    const message = Phaser.Utils.Array.GetRandom([...choices]);
+    this.lastBathroomRushMessage = message;
+    return message;
+  }
+
+  private showCharacterSpeech(characterId: number, text: string = OFFICE_STORY.selectedCharacter) {
+    const view = this.characterViews.get(characterId);
+    if (!view) return;
+    this.selectionSpeechTween?.stop();
+    this.selectionSpeech?.destroy(true);
+
+    const bubbleX = Phaser.Math.Clamp(view.container.x, 72, GAME_WIDTH - 72);
+    const bubbleY = Math.max(31, view.container.y - 49);
+    const bubble = this.add.container(bubbleX, bubbleY).setDepth(1_050).setAlpha(0).setScale(0.86);
+    const plate = this.add.rectangle(0, 0, 144, 32, GAME_COLORS.paper).setStrokeStyle(1, GAME_COLORS.ink);
+    const tail = this.add.triangle(0, 19, 0, 0, 8, 0, 4, 6, GAME_COLORS.paper).setStrokeStyle(1, GAME_COLORS.ink);
+    const message = new PixelText(this, 0, 0, text, {
+      color: GAME_COLORS.ink,
+      pixelSize: 1,
+      maxWidth: 132,
+      lineSpacing: 1
+    });
+    bubble.add([tail, plate, message]);
+    this.selectionSpeech = bubble;
+    this.selectionSpeechCharacterId = characterId;
+    this.selectionSpeechTween = this.tweens.add({
+      targets: bubble,
+      alpha: 1,
+      scaleX: 1,
+      scaleY: 1,
+      duration: 180,
+      hold: WORKDAY_TIMING.speechHoldMs,
+      yoyo: true,
+      ease: "Back.easeOut",
+      onComplete: () => {
+        if (this.selectionSpeech === bubble) {
+          this.selectionSpeech = undefined;
+          this.selectionSpeechTween = undefined;
+          this.selectionSpeechCharacterId = null;
+        }
+        bubble.destroy(true);
+      }
+    });
   }
 
   private rebuildRoster() {

@@ -5,7 +5,9 @@ import { fileURLToPath } from "node:url";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const storePath = path.resolve(__dirname, "../../data/caganometro.json");
+const storePath = process.env.DATA_FILE_PATH
+  ? path.resolve(process.env.DATA_FILE_PATH)
+  : path.resolve(__dirname, "../../data/caganometro.json");
 
 export type AccountRecord = {
   id: number;
