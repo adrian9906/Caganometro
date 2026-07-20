@@ -10,9 +10,21 @@ import { errorHandler, notFoundHandler } from "./middleware/error.js";
 
 export const app = express();
 
+const allowedOrigins = (
+  process.env.CLIENT_ORIGINS ??
+  process.env.CLIENT_ORIGIN ??
+  "http://localhost:5173"
+)
+  .split(",")
+  .map((origin) => origin.trim().replace(/\/$/, ""))
+  .filter(Boolean);
+
 app.use(
   cors({
-    origin: process.env.CLIENT_ORIGIN ?? "http://localhost:5173"
+    origin: allowedOrigins,
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    maxAge: 86400
   })
 );
 app.use(express.json());
