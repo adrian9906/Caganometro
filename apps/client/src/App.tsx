@@ -324,6 +324,19 @@ export default function App() {
         <section className="auth-hero">
           <div className="hero-badge">Oficina pixel art</div>
           <h1>CAGANOMETRO</h1>
+          <figure className="hero-art">
+            <img
+              src="/caganometro-hero.png"
+              alt="Empleado corriendo entre cubiculos hacia el legendario trono del bano"
+              width="1672"
+              height="941"
+              fetchPriority="high"
+            />
+            <figcaption>
+              <span>Mision principal</span>
+              <strong>Conquista el trono</strong>
+            </figcaption>
+          </figure>
           <p className="hero-copy">Crea tu plantilla, conquista el ranking y comparte cada gloriosa visita al bano.</p>
           <div className="hero-marquee"><span>Avatares vivos</span><span>Ranking mundial</span><span>Resultados compartibles</span></div>
         </section>
