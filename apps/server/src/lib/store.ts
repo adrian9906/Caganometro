@@ -1,3 +1,4 @@
+import type { Prisma } from "@prisma/client";
 import { prisma } from "./prisma.js";
 
 export type AccountRecord = {
@@ -57,7 +58,7 @@ export function findAccountById(id: number) {
 }
 
 export function createCharacter(accountId: number, data: NewCharacter) {
-  return prisma.$transaction(async (tx) => {
+  return prisma.$transaction(async (tx: Prisma.TransactionClient) => {
     const character = await tx.character.create({
       data: { accountId, ...data }
     });

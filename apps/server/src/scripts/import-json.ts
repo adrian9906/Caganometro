@@ -1,4 +1,5 @@
 import "dotenv/config";
+import type { Prisma } from "@prisma/client";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { prisma } from "../lib/prisma.js";
@@ -65,7 +66,7 @@ async function importJson() {
     );
   }
 
-  await prisma.$transaction(async (tx) => {
+  await prisma.$transaction(async (tx: Prisma.TransactionClient) => {
     await tx.account.createMany({
       data: source.accounts.map((account) => ({
         id: account.id,
