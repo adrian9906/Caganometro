@@ -97,6 +97,8 @@ pnpm dev
 
 En produccion aplica las migraciones existentes con `pnpm db:deploy`. Para comprobar la conexion y los conteos usa `pnpm db:check`. El importador de una sola vez `pnpm db:import-json` conserva los datos del antiguo archivo JSON y se cancela si la base de destino ya contiene registros.
 
+En Render usa `corepack pnpm install --frozen-lockfile && corepack pnpm --filter server build` como Build Command y `corepack pnpm --filter server start` como Start Command. El build genera Prisma Client antes de compilar el servidor.
+
 Cliente: `http://localhost:5173`  
 API: `http://localhost:3000`
 
