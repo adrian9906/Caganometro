@@ -74,8 +74,8 @@ La oficina funciona como una ciudad-estado decadente.
 - `Phaser 3` para la escena jugable 2D pixel art.
 - `Node.js` + `Express 5` para autenticacion, acciones de juego y ranking.
 - `TypeScript` en cliente y servidor.
-- `Prisma` preparado para evolucionar la persistencia.
-- Persistencia local JSON en el estado actual para desarrollo rapido.
+- `Prisma` como capa de acceso a datos.
+- `PostgreSQL` en Neon para persistencia durable de cuentas, personajes, historial y ranking.
 
 ## Estructura del proyecto
 
@@ -89,10 +89,13 @@ La oficina funciona como una ciudad-estado decadente.
 ```bash
 pnpm install
 Copy-Item apps/server/.env.example apps/server/.env
+# Configura DATABASE_URL y JWT_SECRET en apps/server/.env
 pnpm db:generate
 pnpm db:migrate
 pnpm dev
 ```
+
+En produccion aplica las migraciones existentes con `pnpm db:deploy`. Para comprobar la conexion y los conteos usa `pnpm db:check`. El importador de una sola vez `pnpm db:import-json` conserva los datos del antiguo archivo JSON y se cancela si la base de destino ya contiene registros.
 
 Cliente: `http://localhost:5173`  
 API: `http://localhost:3000`
@@ -113,4 +116,4 @@ Este juego esta hecho como una parodia epica de la vida de oficina: exagerado, s
 
 ## Estado actual
 
-El proyecto ya cuenta con flujo jugable base, autenticacion, seleccion de personajes, ranking y escena animada. La siguiente evolucion natural es mejorar sprites, feedback visual, logros y la persistencia final.
+El proyecto ya cuenta con flujo jugable base, autenticacion, seleccion de personajes, ranking, escena animada y persistencia PostgreSQL en Neon. La siguiente evolucion natural es mejorar sprites, feedback visual y logros.

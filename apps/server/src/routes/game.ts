@@ -8,6 +8,7 @@ import {
   addHistorial,
   createCharacter,
   findAccountById,
+  findCharacterById,
   getActiveCharacter,
   getCharactersByAccountId,
   getLeaderboard,
@@ -176,7 +177,7 @@ gameRouter.post("/poop", async (req, res) => {
     tamano: evolution.tamano,
     fuerza: evolution.fuerza,
     colorActual: evolution.colorActual,
-    ultimaCaca: new Date().toISOString()
+    ultimaCaca: new Date()
   });
 
   const ranking = await getLeaderboard(20);

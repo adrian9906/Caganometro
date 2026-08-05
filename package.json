@@ -14,6 +14,9 @@
     "type-check": "corepack pnpm -r type-check",
     "db:generate": "corepack pnpm --filter server db:generate",
     "db:migrate": "corepack pnpm --filter server db:migrate",
+    "db:deploy": "corepack pnpm --filter server db:deploy",
+    "db:check": "corepack pnpm --filter server db:check",
+    "db:import-json": "corepack pnpm --filter server db:import-json",
     "db:studio": "corepack pnpm --filter server db:studio"
   },
   "packageManager": "pnpm@10.14.0"

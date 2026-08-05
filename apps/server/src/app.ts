@@ -7,6 +7,7 @@ import { authRouter } from "./routes/auth.js";
 import { gameRouter } from "./routes/game.js";
 import { leaderboardRouter } from "./routes/leaderboard.js";
 import { errorHandler, notFoundHandler } from "./middleware/error.js";
+import { prisma } from "./lib/prisma.js";
 
 export const app = express();
 
@@ -29,8 +30,13 @@ app.use(
 );
 app.use(express.json());
 
-app.get("/health", (_req, res) => {
-  res.json({ ok: true });
+app.get("/health", async (_req, res) => {
+  try {
+    await prisma.$queryRaw`SELECT 1`;
+    res.json({ ok: true, database: "connected" });
+  } catch {
+    res.status(503).json({ ok: false, database: "disconnected" });
+  }
 });
 
 app.use("/api/auth", authRouter);

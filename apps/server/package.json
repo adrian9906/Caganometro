@@ -10,6 +10,9 @@
     "type-check": "tsc -p tsconfig.json --noEmit",
     "db:generate": "prisma generate --schema prisma/schema.prisma",
     "db:migrate": "prisma migrate dev --name init --schema prisma/schema.prisma",
+    "db:deploy": "prisma migrate deploy --schema prisma/schema.prisma",
+    "db:check": "tsx src/scripts/check-db.ts",
+    "db:import-json": "tsx src/scripts/import-json.ts",
     "db:studio": "prisma studio --schema prisma/schema.prisma"
   },
   "dependencies": {

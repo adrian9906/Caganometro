@@ -3,40 +3,57 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
-model Usuario {
+model Account {
+  id                Int         @id @default(autoincrement())
+  username          String      @unique @db.VarChar(30)
+  passwordHash      String      @map("password_hash") @db.VarChar(255)
+  activeCharacterId Int?        @map("active_character_id")
+  fechaCreacion     DateTime    @default(now()) @map("fecha_creacion")
+  characters        Character[]
+
+  @@map("accounts")
+}
+
+model Character {
   id             Int              @id @default(autoincrement())
-  nombre         String           @unique @db.VarChar(50)
+  accountId      Int              @map("account_id")
+  nombre         String           @db.VarChar(40)
+  nickname       String           @db.VarChar(24)
+  descripcion    String           @db.VarChar(220)
+  habilidades    String           @db.VarChar(180)
+  fortalezas     String           @db.VarChar(180)
+  debilidades    String           @db.VarChar(180)
   edad           Int
   estatura       Float
   colorPelo      String           @map("color_pelo") @db.VarChar(20)
   colorPiel      String           @map("color_piel") @db.VarChar(7)
   colorActual    String           @map("color_actual") @db.VarChar(7)
-  contrasenaHash String           @map("contrasena") @db.VarChar(255)
   totalCacas     Int              @default(0) @map("total_cacas")
   tamano         Float            @default(1.0)
   fuerza         Int              @default(5)
   ultimaCaca     DateTime?        @map("ultima_caca")
   fechaCreacion  DateTime         @default(now()) @map("fecha_creacion")
+  account        Account          @relation(fields: [accountId], references: [id], onDelete: Cascade)
   historialCacas HistorialCaca[]
 
-  @@index([totalCacas(sort: Desc)])
-  @@map("usuarios")
+  @@index([accountId])
+  @@index([totalCacas(sort: Desc), fuerza(sort: Desc), fechaCreacion])
+  @@map("characters")
 }
 
 model HistorialCaca {
-  id          Int      @id @default(autoincrement())
-  usuarioId   Int      @map("usuario_id")
-  fechaHora   DateTime @default(now()) @map("fecha_hora")
-  tamanoAntes Float    @map("tamano_antes")
-  fuerzaAntes Int      @map("fuerza_antes")
-  colorAntes  String   @map("color_antes") @db.VarChar(7)
-  usuario     Usuario  @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
+  id           Int       @id @default(autoincrement())
+  personajeId Int       @map("personaje_id")
+  fechaHora    DateTime  @default(now()) @map("fecha_hora")
+  tamanoAntes  Float     @map("tamano_antes")
+  fuerzaAntes  Int       @map("fuerza_antes")
+  colorAntes   String    @map("color_antes") @db.VarChar(7)
+  personaje    Character @relation(fields: [personajeId], references: [id], onDelete: Cascade)
 
-  @@index([usuarioId])
+  @@index([personajeId])
   @@map("historial_cacas")
 }
-

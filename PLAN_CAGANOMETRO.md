@@ -16,15 +16,15 @@
 
 ### Persistencia
 
-- Estado actual: almacenamiento local JSON para desarrollo rapido y sin bloqueo del entorno
-- Preparado para siguiente fase: Prisma con SQLite en desarrollo y PostgreSQL en produccion
+- Estado actual: Prisma con PostgreSQL alojado en Neon
+- El antiguo JSON se conserva solo como fuente de migracion y respaldo historico
 
 ## Por que este stack
 
 - `Phaser 3` es el mejor encaje para un personaje humano 2D pixel art que camina, se anima y reacciona en tiempo real.
 - `React` te resuelve formularios, paneles, ranking, perfil y HUD sin pelearte con UI manual.
 - `Express` es suficiente para auth, ranking y acciones del juego sin sobrecargar el proyecto.
-- `Prisma + SQLite/PostgreSQL` sigue siendo la mejor opcion final para crecer a leaderboard real persistente.
+- `Prisma + PostgreSQL` ofrece un leaderboard durable y una base preparada para crecer.
 
 ## Estado actual
 
@@ -94,14 +94,11 @@
 
 ### Fase 3 - Persistencia final de base de datos
 
-1. Activar Prisma de nuevo cuando el entorno no bloquee sus scripts.
-2. Migrar el store JSON a:
-   - SQLite para desarrollo
-   - PostgreSQL para produccion
-3. Crear tablas:
-   - `usuarios`
-   - `historial_cacas`
-4. Correr migraciones y mover datos del JSON si hace falta.
+1. [x] Activar Prisma con PostgreSQL en Neon.
+2. [x] Crear tablas de cuentas, personajes e historial.
+3. [x] Aplicar la migracion inicial.
+4. [x] Importar los datos existentes del JSON sin sobrescribir datos remotos.
+5. [x] Comprobar la conexion desde el endpoint de salud y desde CLI.
 
 ### Fase 4 - Producto real
 
@@ -125,4 +122,3 @@
 ## Nota tecnica importante
 
 El modelo Prisma ya esta preparado en `apps/server/prisma/schema.prisma`, pero por un problema del entorno local con dependencias de Prisma no se pudo dejar operativo en esta sesion. El juego funciona ahora mismo con almacenamiento JSON local para no frenar el desarrollo.
-
